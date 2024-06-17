@@ -1,0 +1,71 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.0'
+	id 'io.spring.dependency-management' version '1.1.5'
+}
+
+group = 'ubb.movierentals'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	runtimeOnly 'org.postgresql:postgresql'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// RabbitMQ
+	implementation 'org.springframework.boot:spring-boot-starter-amqp'
+	testImplementation 'org.springframework.amqp:spring-rabbit-test'
+
+	// Websocket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+	// Jackson
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.17.1'
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.17.1'
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.17.1'
+
+	// Docker
+	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+
+	// protobuf
+//    implementation 'io.github.lognet:grpc-spring-boot-starter:5.1.5'
+	implementation 'net.devh:grpc-spring-boot-starter:3.1.0.RELEASE'
+	implementation 'com.google.protobuf:protobuf-java:3.25.3'
+	implementation 'io.grpc:grpc-netty-shaded:1.62.2'
+	implementation 'io.grpc:grpc-protobuf:1.62.2'
+	implementation 'io.grpc:grpc-stub:1.62.2'
+	implementation 'io.grpc:grpc-core:1.62.2'
+	// to solve the Generated class dependency in the java file generated from proto
+	implementation 'javax.annotation:javax.annotation-api:1.3.2'
+
+	runtimeOnly 'io.grpc:grpc-services:1.62.2'
+	implementation 'com.google.protobuf:protobuf-java-util:3.25.3'
+	implementation 'io.grpc:grpc-inprocess:1.62.2'
+	testImplementation 'io.grpc:grpc-testing:1.62.2'
+	implementation 'io.grpc:grpc-protobuf-lite:1.62.2' // For using lightweight protobuf messages
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

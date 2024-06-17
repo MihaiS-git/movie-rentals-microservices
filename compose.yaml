@@ -1,0 +1,137 @@
+services:
+  cliententity:
+    build:
+      context: ./cliententity
+      dockerfile: Dockerfile
+    ports:
+      - "9096:9096"
+    depends_on:
+      - postgres
+      - rabbitmq
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/cliententity
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+      RABBITMQ_EXCHANGE: my.topic.exchange
+      RABBITMQ_MOVIE_ROUTINGKEY: movie.routingkey
+      RABBITMQ_RENTAL_QUEUE: rental.queue
+      RABBITMQ_MOVIE_QUEUE: movie.queue
+      RABBITMQ_RENTAL_ROUTINGKEY: rental.routingkey
+      RABBITMQ_CLIENT_ROUTINGKEY: client.routingkey
+    networks:
+      - movierentalsnetwork
+
+  movieentity:
+    build:
+      context: ./movieentity
+      dockerfile: Dockerfile
+    ports:
+      - "9097:9097"
+      - "9092:9092"
+    depends_on:
+      - postgres
+      - rabbitmq
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/movieentity
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      MOVIE_SERVICE_HOST: movieentity
+      MOVIE_SERVICE_PORT: 9092
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+      RABBITMQ_EXCHANGE: my.topic.exchange
+      RABBITMQ_MOVIE_ROUTINGKEY: movie.routingkey
+      RABBITMQ_RENTAL_QUEUE: rental.queue
+      RABBITMQ_CLIENT_QUEUE: client.queue
+      RABBITMQ_RENTAL_ROUTINGKEY: rental.routingkey
+      RABBITMQ_CLIENT_ROUTINGKEY: client.routingkey
+    networks:
+      - movierentalsnetwork
+
+  rentalentity:
+    build:
+      context: ./rentalentity
+      dockerfile: Dockerfile
+    ports:
+      - "9095:9095"
+    depends_on:
+      - postgres
+      - rabbitmq
+      - movieentity
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/rentalentity
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+      RABBITMQ_EXCHANGE: my.topic.exchange
+      RABBITMQ_MOVIE_ROUTINGKEY: movie.routingkey
+      RABBITMQ_MOVIE_QUEUE: movie.queue
+      RABBITMQ_CLIENT_QUEUE: client.queue
+      RABBITMQ_RENTAL_ROUTINGKEY: rental.routingkey
+      RABBITMQ_CLIENT_ROUTINGKEY: client.routingkey
+    networks:
+      - movierentalsnetwork
+
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - movierentalsnetwork
+
+  rabbitmq:
+    image: 'rabbitmq:3.13.3-management-alpine'
+    environment:
+      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_USER: guest
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    networks:
+      - movierentalsnetwork
+
+  angularapp:
+    build:
+      context: ./webapp
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - gateway
+    networks:
+      - movierentalsnetwork
+
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - cliententity
+      - movieentity
+      - rentalentity
+    networks:
+      - movierentalsnetwork
+
+networks:
+  movierentalsnetwork:
+    driver: bridge

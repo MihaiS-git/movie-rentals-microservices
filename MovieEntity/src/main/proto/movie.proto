@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package ubb.movierentals.grpc;
+
+service MovieServiceRPC {
+  rpc getAllMovies(GetMoviesRequest) returns (GetMoviesResponse);
+  rpc getMovieById(GetMovieRequest) returns (GetMovieResponse);
+  rpc addMovie(AddMovieRequest) returns (AddMovieResponse);
+  rpc updateMovie(UpdateMovieRequest) returns (UpdateMovieResponse);
+  rpc deleteMovieById(DeleteMovieRequest) returns (DeleteMovieResponse);
+}
+
+message GetMoviesRequest {}
+
+message GetMoviesResponse {
+  repeated Movie movies = 1;
+}
+
+message GetMovieRequest {
+  int64 movieId = 1;
+}
+message GetMovieResponse {
+  Movie movie = 1;
+}
+
+message AddMovieRequest {
+  Movie movie = 1;
+}
+
+message AddMovieResponse {
+  Movie movie = 1;
+}
+
+message UpdateMovieRequest {
+  int64 movieId = 1;
+  Movie movie = 2;
+}
+
+message UpdateMovieResponse {
+  Movie movie = 1;
+}
+
+message DeleteMovieRequest {
+  int64 id = 1;
+}
+
+message DeleteMovieResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message Movie {
+  optional int64 id = 1;
+  optional string title = 2;
+  optional int32 year = 3;
+  optional MovieGenres genre = 4;
+  optional AgeRestrictions ageRestrictions = 5;
+  optional double rentalPrice = 6;
+  optional bool available = 7;
+}
+
+enum MovieGenres {
+  ACTION = 0;
+  COMEDY = 1;
+  DRAMA = 2;
+  FANTASY = 3;
+  HORROR = 4;
+  MYSTERY = 5;
+  ROMANCE = 6;
+  THRILLER = 7;
+  UNKNOWN = 8;
+  WESTERN = 9;
+}
+
+enum AgeRestrictions {
+  GA = 0;
+  PG = 1;
+  PG13 = 2;
+  R = 3;
+  NC17 = 4;
+  UNKNOWN_AR = 5;
+}
+
