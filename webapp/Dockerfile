@@ -14,13 +14,14 @@ RUN npm install bootstrap && npm install
 COPY . .
 
 # Build the Angular app
-RUN npm run build -- --prod
+RUN npm run build -- --configuration production
 
 # Stage 2: Serve the Angular application using NGINX
 FROM nginx:alpine
 
 # Copy the built app from the previous stage to the Nginx directory
 COPY --from=build /usr/src/app/dist/webapp /usr/share/nginx/html
+COPY --from=build /usr/src/app/nginx.conf /etc/nginx/nginx.conf
 
 # Expose port 80 (the default Nginx port)
 EXPOSE 80

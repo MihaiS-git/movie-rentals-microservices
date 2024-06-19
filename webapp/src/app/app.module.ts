@@ -16,13 +16,13 @@ import { RentalListComponent } from './rentals/rental-list/rental-list.component
 import { RentalDetailComponent } from './rentals/rental-detail/rental-detail.component';
 import { RentalService } from './service/rental.service';
 import { ClientService } from './service/client.service';
-/* import { RentalInboxComponent } from './rentals/rental-inbox/rental-inbox.component';
+import { RentalInboxComponent } from './rentals/rental-inbox/rental-inbox.component';
 import { ClientsInboxComponent } from './clients/clients-inbox/clients-inbox.component';
-import { MovieInboxComponent } from './movies/movie-inbox/movie-inbox.component'; */
+import { MovieInboxComponent } from './movies/movie-inbox/movie-inbox.component';
 import { MovieService } from './service/movie.service';
-/* import { RentalInboxService } from './service/rental-inbox.service';
+import { RentalInboxService } from './service/rental-inbox.service';
 import { MovieInboxService } from './service/movie-inbox.service';
-import { ClientInboxService } from './service/client-inbox.service'; */
+import { ClientInboxService } from './service/client-inbox.service';
 
 
 @NgModule({
@@ -37,9 +37,9 @@ import { ClientInboxService } from './service/client-inbox.service'; */
     RentalsComponent,
     RentalListComponent,
     RentalDetailComponent,
-/*     RentalInboxComponent,
+    RentalInboxComponent,
     ClientsInboxComponent,
-    MovieInboxComponent, */
+    MovieInboxComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +47,7 @@ import { ClientInboxService } from './service/client-inbox.service'; */
     HttpClientModule,
     AppRoutingModule,
   ],
-  providers: [MovieService, ClientService, RentalService, /* RentalInboxService, MovieInboxService, ClientInboxService */],
+  providers: [MovieService, ClientService, RentalService, RentalInboxService, MovieInboxService, ClientInboxService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,4 +1,4 @@
-/* import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Message, Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
@@ -18,7 +18,7 @@ export class MovieInboxService {
   private initializeWebSocketConnection(): void {
     const serverUrl = environment.websocketUrls.movieEntityApiUrl;
     const ws = new SockJS(serverUrl);
-    this.stompClient = Stomp.over(ws);
+    this.stompClient = Stomp.over(() => ws);
 
     this.stompClient.configure({
       reconnectDelay: 1000, // Automatically reconnect with a delay
@@ -65,4 +65,4 @@ export class MovieInboxService {
     return this.messageSubject.asObservable();
   }
 }
- */
+

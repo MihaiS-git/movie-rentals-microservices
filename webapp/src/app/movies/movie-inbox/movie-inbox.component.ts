@@ -1,4 +1,4 @@
-/* import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MovieInboxService } from 'src/app/service/movie-inbox.service';
 
@@ -31,4 +31,4 @@ export class MovieInboxComponent implements OnInit, OnDestroy {
     }
   }
 }
- */
+

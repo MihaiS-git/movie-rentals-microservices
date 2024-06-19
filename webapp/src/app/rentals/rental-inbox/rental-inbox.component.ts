@@ -1,4 +1,4 @@
-/* import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { RentalInboxService } from 'src/app/service/rental-inbox.service';
 
@@ -31,4 +31,4 @@ export class RentalInboxComponent implements OnInit, OnDestroy {
   }
 
 }
- */
+

@@ -1,4 +1,4 @@
-/* import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ClientInboxService } from 'src/app/service/client-inbox.service';
 
@@ -32,4 +32,4 @@ export class ClientsInboxComponent implements OnInit, OnDestroy {
   }
 
 }
- */
+

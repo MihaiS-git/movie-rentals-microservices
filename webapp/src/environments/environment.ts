@@ -5,5 +5,10 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080'
+  apiUrl: 'http://localhost:8080',
+  websocketUrls: {
+    rentalEntityApiUrl: 'http://localhost:9095/ws',
+    clientEntityApiUrl: 'http://localhost:9096/ws',
+    movieEntityApiUrl: 'http://localhost:9097/ws'
+  }
 };
