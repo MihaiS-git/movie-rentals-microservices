@@ -19,8 +19,8 @@ services:
       SPRING_RABBITMQ_PASSWORD: guest
       RABBITMQ_EXCHANGE: my.topic.exchange
       RABBITMQ_MOVIE_ROUTINGKEY: movie.routingkey
-      RABBITMQ_RENTAL_QUEUE: rental.queue
-      RABBITMQ_MOVIE_QUEUE: movie.queue
+      RABBITMQ_RENTAL_QUEUE: client.rental.queue
+      RABBITMQ_MOVIE_QUEUE: client.movie.queue
       RABBITMQ_RENTAL_ROUTINGKEY: rental.routingkey
       RABBITMQ_CLIENT_ROUTINGKEY: client.routingkey
     networks:
@@ -49,8 +49,8 @@ services:
       SPRING_RABBITMQ_PASSWORD: guest
       RABBITMQ_EXCHANGE: my.topic.exchange
       RABBITMQ_MOVIE_ROUTINGKEY: movie.routingkey
-      RABBITMQ_RENTAL_QUEUE: rental.queue
-      RABBITMQ_CLIENT_QUEUE: client.queue
+      RABBITMQ_RENTAL_QUEUE: movie.rental.queue
+      RABBITMQ_CLIENT_QUEUE: movie.client.queue
       RABBITMQ_RENTAL_ROUTINGKEY: rental.routingkey
       RABBITMQ_CLIENT_ROUTINGKEY: client.routingkey
     networks:
@@ -77,8 +77,8 @@ services:
       SPRING_RABBITMQ_PASSWORD: guest
       RABBITMQ_EXCHANGE: my.topic.exchange
       RABBITMQ_MOVIE_ROUTINGKEY: movie.routingkey
-      RABBITMQ_MOVIE_QUEUE: movie.queue
-      RABBITMQ_CLIENT_QUEUE: client.queue
+      RABBITMQ_MOVIE_QUEUE: rental.movie.queue
+      RABBITMQ_CLIENT_QUEUE: rental.client.queue
       RABBITMQ_RENTAL_ROUTINGKEY: rental.routingkey
       RABBITMQ_CLIENT_ROUTINGKEY: client.routingkey
     networks:

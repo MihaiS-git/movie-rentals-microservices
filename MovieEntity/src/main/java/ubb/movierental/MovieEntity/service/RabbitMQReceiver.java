@@ -23,19 +23,19 @@ public class RabbitMQReceiver {
     @RabbitListener(queues = "${rabbitmq.rental.queue}" )
     public void receiveMessageFromRentalQueue(String message) {
         log.info("Received message: {}", message);
-        extracted(message);
+        extracted("Rental: " + message);
     }
 
     @RabbitListener(queues = "${rabbitmq.client.queue}" )
     public void receiveMessageFromClientQueue(String message) {
         log.info("Received message: {}", message);
-        extracted(message);
+        extracted("Client: " + message);
     }
 
     private void extracted(String message) {
         try {
             Map<String, String> messageMap = new HashMap<>();
-            messageMap.put("message", "Movie: " + message);
+            messageMap.put("message", message);
             String messageJson = objectMapper.writeValueAsString(messageMap);
             messagingTemplate.convertAndSend("/topic/moviemessage", messageJson);
             log.info("Sent message: {}", messageJson);
